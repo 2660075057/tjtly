@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<body>
+
+	<div class="container">
+		<div>
+			<form class="form-inline" id="uploadForm" enctype="multipart/form-data">
+				<div>
+					<div class="form-group" style="margin: 10px;">
+						<label for="inputtext3" class="col-sm-2 control-label"
+							style="margin-top: 7px;">收信人</label>
+						<div class="col-lg-2">
+							<div id="ss">
+								<input type="text" class="form-control" style="width: 500px;"
+									id="sxr" name="receiver">
+							</div>
+
+						</div>
+
+					</div>
+					<div class="btn-group" style="margin-left: 20px; margin-top: 12px;">
+						<div class="btn-group">
+							<button type="button" class="btn btn-danger">亲选择</button>
+							<button type="button" class="btn btn-danger dropdown-toggle"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								<span class="caret"></span> <span class="sr-only">Toggle
+									Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" id="sel">
+							</ul>
+						</div>
+					</div>
+					<button type="reset" class="btn btn-default"
+						style="margin-left: 10px;">清除</button>
+				</div>
+				<div style="display: none;" id="chao">
+					<div class="form-group" style="margin: 10px;">
+						<label for="inputtext3" class="col-sm-2 control-label"
+							style="margin-top: 7px;">抄送人</label>
+						<div class="col-lg-2">
+							<div id="ss">
+								<input type="text" class="form-control" style="width: 500px;"
+									id="csr" name="copyer">
+							</div>
+
+						</div>
+
+					</div>
+					<div class="btn-group">
+						<div class="btn-group" style="margin-left: 20px; margin-top: 12px;">
+						<div class="btn-group">
+							<button type="button" class="btn btn-danger">亲选择</button>
+							<button type="button" class="btn btn-danger dropdown-toggle"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								<span class="caret"></span> <span class="sr-only">Toggle
+									Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" id="sel1">
+							</ul>
+						</div>
+					</div>
+					</div>
+					<button type="reset" class="btn btn-default"
+						style="margin-left: 10px;">清除</button>
+				</div>
+				<div style="display: none;" id="mi">
+					<div class="form-group" style="margin: 10px;">
+						<label for="inputtext3" class="col-sm-2 control-label"
+							style="margin-top: 7px;">密送人</label>
+						<div class="col-lg-2">
+							<div id="ss">
+								<input type="text" class="form-control" style="width: 500px;"
+									id="msr" name="secret">
+							</div>
+
+						</div>
+
+					</div>
+					<div class="btn-group">
+						<div class="btn-group" style="margin-left: 20px; margin-top: 12px;">
+						<div class="btn-group">
+							<button type="button" class="btn btn-danger">亲选择</button>
+							<button type="button" class="btn btn-danger dropdown-toggle"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								<span class="caret"></span> <span class="sr-only">Toggle
+									Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" id="sel2">
+							</ul>
+						</div>
+					</div>
+					</div>
+					<button type="reset" class="btn btn-default"
+						style="margin-left: 10px;">清除</button>
+				</div>
+				<div style="margin-left: 124px;">
+					<button type="button" class="btn btn-default" id="cs">显示抄送</button>
+					<button type="button" class="btn btn-default" id="ms">显示密送</button>
+				</div>
+				<div class="form-group" style="margin: 10px;">
+					<label for="inputtext3" class="col-sm-2 control-label"
+						style="margin-top: 7px; margin-left: -7px;">主题</label>
+					<div class="col-lg-2">
+						<div id="ss">
+							<input type="text" class="form-control" id="exampleInputName2"
+								style="width: 650px; margin-left: -11px;" name="title">
+						</div>
+					</div>
+
+				</div>
+				<div style="margin-left: 124px;">
+					<input type="file" value="上传附件" class="btn btn-default" id="filename" name="filename"/>
+				</div>
+				<div class="form-group" style="margin: 10px;">
+					<label for="exampleInputEmail1" style="margin-left: 11px;">文本</label>
+					<div style="margin-left: 110px;">
+						<textarea class="form-control" rows="10" cols="70" name="content"></textarea>
+					</div>
+				</div>
+				<div>
+					<div class="form-group" style="margin: 10px;">
+						<div>
+							<input type="hidden" name="senderid">
+							
+							<button type="button" class="btn btn-default" id="baocun" boxType="1">发送</button>
+							<button type="button" class="btn btn-default" id="ccg" boxType="0" >存草稿</button>
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/ajaxfileupload.js"></script>
+<script>
+	$(function() {
+		$("[name='senderid']").val($("#username").val())
+		$("#cs").click(function() {
+			if ($("#chao").css("display") == "none") {
+				$(this).html("删除抄送");
+				$("#chao").show();
+			} else {
+				$(this).html("显示抄送");
+				$("#chao").hide();
+			}
+
+		})
+		$("#ms").click(function() {
+			if ($("#mi").css("display") == "none") {
+				$(this).html("删除密送");
+				$("#mi").show();
+			} else {
+				$(this).html("显示密送");
+				$("#mi").hide();
+			}
+		})
+		
+		var sj=[];
+		$(document).on("click",".sname",function(){
+			var username=$(this).attr("date_name");
+			var shou =document.getElementById("sxr").value+=""+username+";";
+		})
+		$(document).on("click",".cname",function(){
+			var username=$(this).attr("date_name");
+			var shou =document.getElementById("csr").value+=""+username+";";
+		})
+		$(document).on("click",".mname",function(){
+			var username=$(this).attr("date_name");
+			var shou =document.getElementById("msr").value+=""+username+";";
+		})
+		se();
+		var receiver=[];
+		var copyer=[];
+		var secret=[];
+		$("#baocun").click(function(){
+			receiver.push($("[name='receiver']").val());
+			copyer.push($("[name='copyer']").val());
+			secret.push($("[name='secret']").val());
+			var title = $("[name='title']").val();
+			var filename = $("[name='filename']").val();
+			var content = $("[name='content']").val();
+			var senderid = $("[name='senderid']").val();
+			var boxType =$(this).attr("boxType");
+			var em={};
+			em["sjr"]=receiver;
+			em["csr"]=copyer;
+			em["msr"]=secret;
+			em["title"]=title;
+			em["filePathContent"]=filename;
+			em["content"]=content;
+			em["senderid"]=senderid;
+			em["boxType"]=boxType;
+			ss(em);
+		})
+		$("#ccg").click(function(){
+			receiver.push($("[name='receiver']").val());
+			copyer.push($("[name='copyer']").val());
+			secret.push($("[name='secret']").val());
+			var title = $("[name='title']").val();
+			var filename = $("[name='filename']").val();
+			var content = $("[name='content']").val();
+			var senderid = $("[name='senderid']").val();
+			var boxType =$(this).attr("boxType");
+			/* alert(receiver); */
+			var em={};
+			em["sjr"]=receiver;
+			em["csr"]=copyer;
+			em["msr"]=secret;
+			em["title"]=title;
+			em["filePathContent"]=filename;
+			em["content"]=content;
+			em["senderid"]=senderid;
+			em["boxType"]=boxType;
+			ss(em);
+		})
+	})
+	function ss(em){
+		 $.ajaxFileUpload({
+				url:"/OA/em/addinfo",
+				secureuri:false,
+				fileElementId:['files'],
+				dateType:"json",
+				data:em,
+				type:"post",
+				success : function(json) {
+					if (json.code==200) {
+						
+					}
+					
+				},error : function(xhr, s, e) {
+
+				}
+			}) 
+		
+	}
+	
+	function se() {
+		$.ajax("/OA/em/queryuser", {
+			type : "POST",
+			dataType : "json",
+			timeout : 4000,
+			success : function(json) {
+				$("#sel").html("");
+				$("#sel1").html("");
+				$("#sel2").html("");
+				$.each(json.date, function(i, obj) {
+					$("#sel").append("<li class='sname'  date_name="+obj.username+"><a href='#'>"+obj.username+"</a></li>");
+					$("#sel1").append("<li class='cname'  date_name="+obj.username+"><a href='#'>"+obj.username+"</a></li>");
+					$("#sel2").append("<li class='mname'  date_name="+obj.username+"><a href='#'>"+obj.username+"</a></li>");
+				})
+			},
+			error : function(xhr, s, e) {
+
+			}
+		});
+	}
+</script>
+
+</html>

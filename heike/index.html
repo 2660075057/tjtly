@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            background: black;
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="450" height="450" id="canvas"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    var s = window.screen;
+    var w = s.width;
+    var h = s.height;
+    var fontSize = 12;
+    canvas.width = w;
+    canvas.height = h;
+
+    var cols = Math.floor(w / fontSize);
+    var drops = [];
+
+    for (var i = 0; i < cols; i++) {
+        drops.push(0)
+    }
+    //绘制文字
+
+
+    function draw() {
+        ctx.fillStyle = "rgba(0,0,0,0.05)";
+        ctx.font = "600 " + fontSize + "px 楷体"; //可单独分离单个属性
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = "#ffff00";
+        for (var i = 0; i < cols; i++) {
+            var x = i * fontSize;
+            var y = drops[i] * fontSize;
+
+            ctx.fillText("蓝", x, y);
+            if (y > canvas.height) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+
+    }
+    setInterval(draw, 33);
+</script>
+
+</html>

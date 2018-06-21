@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            background: antiquewhite;
+            margin: 130px auto;
+            display: block;
+            border: 1px solid;
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<canvas width="450" height="450" id="canvas"></canvas>
+
+<body>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        var snakeCount = 6;
+        ctx.fillStyle = "#f7fffa";
+        var snake = [];
+        var toGO = 3;
+        var foodX = 150;
+        var foodY = 150;
+        var time = 150;
+        var timer;
+
+        function drowRect() {
+            for (var i = 0; i < 30; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, 15 * i);
+                ctx.lineTo(450, 15 * i);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(15 * i, 0);
+                ctx.lineTo(15 * i, 450);
+                ctx.closePath();
+                ctx.stroke();
+            }
+            for (var i = 0; i < snakeCount; i++) {
+                if (i == snakeCount - 1) {
+                    ctx.fillStyle = "green";
+                }
+                ctx.fillRect(snake[i].x, snake[i].y, 15, 15);
+
+            }
+            ctx.fillStyle = "red";
+            ctx.fillRect(foodX, foodY, 15, 15);
+            ctx.fill();
+        }
+
+        function start() {
+            for (var i = 0; i < snakeCount; i++) {
+                snake[i] = {
+                    x: 15 * i,
+                    y: 0
+                };
+            }
+
+            addFood();
+            drowRect();
+
+        }
+        // <!-- 
+        function addFood() {
+            foodX = Math.floor((Math.random() * 30)) * 15
+            foodY = Math.floor((Math.random() * 30)) * 15
+            for (var i = 0; i < snakeCount - 1; i++) {
+                if (foodX == snake[i].x && foodY == snake[i].y) {
+                    addFood();
+                }
+            }
+        }
+
+        function move() {
+            switch (toGO) {
+                case 1:
+                    snake.push({
+                        x: snake[snakeCount - 1].x - 15,
+                        y: snake[snakeCount - 1].y
+                    });
+                    break;
+                case 2:
+                    snake.push({
+                        x: snake[snakeCount - 1].x,
+                        y: snake[snakeCount - 1].y - 15
+                    });
+                    break;
+                case 3:
+                    snake.push({
+                        x: snake[snakeCount - 1].x + 15,
+                        y: snake[snakeCount - 1].y
+                    });
+                    break;
+                case 4:
+                    snake.push({
+                        x: snake[snakeCount - 1].x,
+                        y: snake[snakeCount - 1].y + 15
+                    });
+                    break;
+                default:
+                    break;
+            }
+
+            if (snake[snakeCount - 1].x < 1 || snake[snakeCount - 1].y < 0 || snake[snakeCount - 1].x > 450 || snake[snakeCount - 1].x > 450) {
+
+                drowRect();
+
+
+            } else {
+                snake.shift();
+                ctx.clearRect(0, 0, 450, 450);
+                isEat();
+                drowRect();
+            }
+
+
+
+
+        }
+
+        function isEat() {
+            if (snake[snakeCount - 1].x == foodX && snake[snakeCount - 1].y == foodY) {
+                addFood();
+                snakeCount++;
+                time -= 10;
+                snake.unshift({
+                    x: -15,
+                    y: -15
+                });
+
+            }
+        }
+
+        function keyDown(e) {
+            switch (e.keyCode) {
+                case 37:
+                    toGO = 1;
+
+                    break;
+                case 38:
+                    toGO = 2;
+                    break;
+                case 39:
+                    toGO = 3;
+                    break;
+                case 40:
+                    toGO = 4;
+                    break;
+            }
+        }
+
+
+        window.onload = function() {
+            clearInterval(timer)
+            setInterval(move, time)
+            document.onkeydown = function(e) {
+                keyDown(e)
+            }
+            start();
+
+        }
+    </script>
+
+
+</body>
+
+</html>
